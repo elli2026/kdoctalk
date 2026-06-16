@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>K-Doc Talk</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--nv:#282559;--bl:#1368B2;--or:#F09700;--w:#fff;--bg:#F7F8FC;--g1:#F0F1F5;--g3:#D1D3DB;--g5:#6B7280;--g7:#374151;--rd:#EF4444}
+html,body{height:100%;overflow:hidden;font-family:'Montserrat',system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+.scr{display:none;height:100dvh;flex-direction:column}.scr.on{display:flex}
+
+/* Entry */
+.ent{background:linear-gradient(165deg,var(--nv),#1a1850 50%,var(--bl));align-items:center;justify-content:center;padding:24px}
+.ent-logo{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--bl),var(--or));display:flex;align-items:center;justify-content:center;margin-bottom:16px;font-size:28px}
+.ent h1{color:#fff;font-size:30px;font-weight:800;margin-bottom:4px}.dot{color:var(--or)}
+.ent .sub{color:rgba(255,255,255,.5);font-size:12px;letter-spacing:3px;text-transform:uppercase;margin-bottom:48px}
+.ent .prompt{color:rgba(255,255,255,.8);font-size:15px;margin-bottom:20px}
+.lg{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;max-width:320px}
+.lb{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:22px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:10px;transition:all .15s}
+.lb:active{background:rgba(255,255,255,.2);transform:scale(.97)}
+.lb .fl{font-size:36px}.lb .nm{color:#fff;font-size:16px;font-weight:600}
+.ent-ft{margin-top:48px;opacity:.35;color:#fff;font-size:12px}
+
+/* Chat */
+.hd{background:var(--nv);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.hd-l{display:flex;align-items:center;gap:10px}
+.hd-logo{color:#fff;font-size:16px;font-weight:700}
+.hd-badge{background:rgba(255,255,255,.12);border-radius:20px;padding:4px 10px;font-size:13px;color:#fff;display:flex;align-items:center;gap:4px}
+.hd-btn{background:rgba(255,255,255,.1);border:none;border-radius:8px;padding:6px 10px;cursor:pointer;color:#fff;font-size:16px}
+
+.chat{flex:1;overflow-y:auto;padding:16px 12px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+.empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;opacity:.35;padding:40px;text-align:center}
+.empty .ei{font-size:48px}.empty .et{font-size:14px;color:var(--g5);line-height:1.7;white-space:pre-line}
+
+.m{display:flex;flex-direction:column;max-width:85%}
+.m.d{align-self:flex-start}.m.p{align-self:flex-end;align-items:flex-end}
+.mw{font-size:11px;font-weight:600;color:var(--g5);margin-bottom:3px;padding:0 4px}
+.mb{padding:12px 16px;width:100%;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.m.d .mb{background:#fff;border-radius:4px 16px 16px 16px}
+.m.p .mb{background:#E8F0FE;border-radius:16px 4px 16px 16px}
+.mo{font-weight:500;color:var(--g7);line-height:1.6}
+.ml{height:1px;background:#E5E7EB;margin:8px 0}
+.mt{font-weight:700;line-height:1.6}
+.m.d .mt{color:var(--bl)}.m.p .mt{color:var(--nv)}
+.mf{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.mf .ti{font-size:10px;color:#9CA3AF}
+.mf .sp{background:rgba(19,104,178,.08);border:none;cursor:pointer;border-radius:8px;padding:4px 10px;font-size:13px}
+.dw{background:rgba(255,152,0,.08);border:1px solid rgba(255,152,0,.3);border-radius:10px;padding:8px 12px;margin-top:6px;font-size:11px;color:#E65100;line-height:1.5}
+
+.sb{padding:10px 20px;border-radius:16px;background:rgba(19,104,178,.06);align-self:center;text-align:center;max-width:90%}
+.sb .si{font-size:13px;color:var(--bl);font-weight:600}
+
+.rb{background:linear-gradient(90deg,rgba(19,104,178,.04),rgba(240,151,0,.04));padding:8px 0;display:flex;justify-content:center;align-items:center;gap:8px;flex-shrink:0}
+.rd{width:10px;height:10px;border-radius:50%;background:var(--rd);animation:rp 1.2s infinite}
+.rb span{font-size:13px;font-weight:600;color:var(--g7)}
+
+/* Quick Phrases */
+.qp{display:none;flex-shrink:0;background:#fff;border-top:1px solid #E5E7EB;max-height:42vh;flex-direction:column}
+.qp.on{display:flex}
+.qt{display:flex;overflow-x:auto;gap:4px;padding:8px 12px;flex-shrink:0;border-bottom:1px solid var(--g1)}
+.qt::-webkit-scrollbar{display:none}
+.qc{padding:6px 14px;border-radius:16px;border:1px solid var(--g3);background:#fff;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;color:var(--g7)}
+.qc.on{background:var(--nv);color:#fff;border-color:var(--nv)}
+.ql{flex:1;overflow-y:auto;padding:8px 12px;display:flex;flex-direction:column;gap:6px}
+.qi{padding:12px 14px;border:1px solid var(--g1);border-radius:12px;cursor:pointer;text-align:left;background:#fff;font-family:inherit;line-height:1.5;transition:all .1s}
+.qi:active{background:rgba(19,104,178,.06);transform:scale(.98)}
+.qi .qk{font-size:14px;font-weight:600;color:var(--g7)}
+.qi .qv{font-size:13px;color:var(--bl);margin-top:3px}
+
+/* Bottom */
+.bt{flex-shrink:0;background:#fff;border-top:1px solid #E5E7EB;padding:8px 16px 28px}
+.btr{display:flex;gap:8px;margin-bottom:8px;justify-content:center}
+.btr button{border:none;border-radius:20px;padding:6px 14px;cursor:pointer;font-size:12px;font-weight:600;font-family:inherit}
+.qb{background:var(--or);color:#fff}.qb.on{background:var(--nv)}
+.mb2{background:none;border:1px solid var(--g3)!important;color:var(--g5)}
+
+.mr{display:flex;justify-content:center;gap:16px}
+.mc{flex:1;max-width:160px;padding:18px 12px;border-radius:16px;border:2px solid transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;transition:all .15s;font-family:inherit}
+.mc:active{transform:scale(.96)}
+.mc.dc{background:var(--nv)}.mc.pc{background:var(--bl)}
+.mc.ra{border-color:var(--rd)!important;background:rgba(239,68,68,.06)!important}
+.mc.off{opacity:.3;pointer-events:none}
+.mc .mi{font-size:28px}
+.mc .ml2{font-size:14px;font-weight:700;color:#fff}
+.mc .ms{font-size:10px;color:rgba(255,255,255,.5)}
+.mc.ra .ml2,.mc.ra .ms{color:var(--rd)}
+
+.ta{display:flex;flex-direction:column;gap:8px}
+.ta input{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--g3);font-size:15px;outline:none;font-family:inherit}
+.ta input:focus{border-color:var(--bl)}
+.tw{display:flex;gap:8px}
+.tw button{flex:1;padding:14px;border-radius:12px;border:none;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit}
+.tw button:disabled{opacity:.4;cursor:not-allowed}
+.td{background:var(--nv)}.tp{background:var(--bl)}
+
+/* Settings */
+.sh{background:var(--nv);padding:16px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.sh .bk{background:none;border:none;color:#fff;font-size:22px;cursor:pointer}
+.sh .tt{color:#fff;font-size:17px;font-weight:700}
+.sy{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--bg)}
+.sc{background:#fff;border-radius:16px;padding:20px}
+.sl{font-size:12px;font-weight:700;color:var(--g5);margin-bottom:12px;text-transform:uppercase}
+.or{display:flex;gap:8px}
+.ob{flex:1;padding:14px 12px;border-radius:12px;cursor:pointer;text-align:center;border:1px solid var(--g3);background:#fff;font-family:inherit}
+.ob.s{border:2px solid var(--bl);background:rgba(19,104,178,.06)}
+.ob .o1{font-size:14px;font-weight:600}
+.lr{display:flex;justify-content:space-between;align-items:center}
+.cb{padding:16px;border-radius:16px;border:1px solid var(--g3);background:#fff;cursor:pointer;font-size:14px;font-weight:600;width:100%;font-family:inherit}
+
+@keyframes rp{0%{box-shadow:0 0 0 0 rgba(239,68,68,.4)}70%{box-shadow:0 0 0 10px rgba(239,68,68,0)}100%{box-shadow:0 0 0 0 rgba(239,68,68,0)}}
+</style>
+</head>
+<body>
+
+<!-- ENTRY -->
+<div id="S0" class="scr ent on">
+  <div class="ent-logo">🎙</div>
+  <h1>K-Doc<span class="dot">.</span>Talk</h1>
+  <div class="sub">AI Medical Interpreter</div>
+  <div class="prompt">Select your language</div>
+  <div class="lg">
+    <button class="lb" onclick="go('zh-TW','zh-TW','中文','🇹🇼','繁體中文')"><span class="fl">🇹🇼</span><span class="nm">繁體中文</span></button>
+    <button class="lb" onclick="go('ja','ja-JP','日本語','🇯🇵','日本語')"><span class="fl">🇯🇵</span><span class="nm">日本語</span></button>
+    <button class="lb" onclick="go('en','en-US','English','🇺🇸','English')"><span class="fl">🇺🇸</span><span class="nm">English</span></button>
+    <button class="lb" onclick="go('zh-CN','zh-CN','简体中文','🇨🇳','简体中文')"><span class="fl">🇨🇳</span><span class="nm">简体中文</span></button>
+  </div>
+  <div class="ent-ft">powered by K‑DocFinder</div>
+</div>
+
+<!-- CHAT -->
+<div id="S1" class="scr">
+  <div class="hd">
+    <div class="hd-l">
+      <span class="hd-logo">K-Doc<span class="dot">.</span>Talk</span>
+      <span class="hd-badge"><span id="hf"></span><span style="opacity:.5;font-size:11px">⇄</span>🇰🇷</span>
+    </div>
+    <button class="hd-btn" onclick="sw('S2')">⚙️</button>
+  </div>
+  <div class="chat" id="CA">
+    <div class="empty" id="EM">
+      <div class="ei">🎙</div>
+      <div class="et" id="ET">마이크 버튼을 탭하세요\nTap a mic button to start</div>
+    </div>
+  </div>
+  <div class="qp" id="QP">
+    <div class="qt" id="QT"></div>
+    <div class="ql" id="QL"></div>
+  </div>
+  <div id="RB" class="rb" style="display:none"><div class="rd"></div><span id="RL">듣고 있습니다...</span></div>
+  <div class="bt">
+    <div class="btr">
+      <button class="qb" id="QB" onclick="toggleQP()">💬 자주 쓰는 문장</button>
+      <button class="mb2" id="MB" onclick="toggleMode()">⌨️ 텍스트</button>
+    </div>
+    <div id="VU" class="mr">
+      <button class="mc dc" id="MD" onclick="toggleRec('doctor')"><span class="mi">🎤</span><span class="ml2">한국어</span><span class="ms">Doctor</span></button>
+      <button class="mc pc" id="MP" onclick="toggleRec('patient')"><span class="mi">🎤</span><span class="ml2" id="PL">中文</span><span class="ms">Patient</span></button>
+    </div>
+    <div id="TU" class="ta" style="display:none">
+      <input id="TI" placeholder="텍스트 입력 / Type here...">
+      <div class="tw">
+        <button class="td" onclick="sendText('doctor')">🩺 한국어</button>
+        <button class="tp" onclick="sendText('patient')" id="TB">👤 中文</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS -->
+<div id="S2" class="scr" style="background:var(--bg)">
+  <div class="sh"><button class="bk" onclick="sw('S1')">←</button><span class="tt">Settings</span></div>
+  <div class="sy">
+    <div class="sc">
+      <div class="sl">Doctor Voice / 의사 음성</div>
+      <div class="or">
+        <button class="ob s" id="DF" onclick="setV('doc','f')"><div class="o1">👩 여성</div></button>
+        <button class="ob" id="DM" onclick="setV('doc','m')"><div class="o1">👨 남성</div></button>
+      </div>
+    </div>
+    <div class="sc">
+      <div class="sl">Patient Voice / 환자 음성</div>
+      <div class="or">
+        <button class="ob s" id="PF" onclick="setV('pat','f')"><div class="o1">👩 여성</div></button>
+        <button class="ob" id="PM" onclick="setV('pat','m')"><div class="o1">👨 남성</div></button>
+      </div>
+    </div>
+    <div class="sc">
+      <div class="sl">Text Size / 글자 크기</div>
+      <div class="or">
+        <button class="ob" id="FS" onclick="setF('s')" style="font-size:13px;font-weight:700">A</button>
+        <button class="ob s" id="FM" onclick="setF('m')" style="font-size:16px;font-weight:700">A</button>
+        <button class="ob" id="FL" onclick="setF('l')" style="font-size:20px;font-weight:700">A</button>
+      </div>
+    </div>
+    <div class="sc">
+      <div class="sl">Language / 언어</div>
+      <div class="lr"><span id="SL" style="font-size:16px"></span><button class="ob" onclick="sw('S0')" style="padding:8px 16px;font-size:13px">Change</button></div>
+    </div>
+    <button class="cb" id="CP" onclick="copyAll()">📋 대화 내역 복사 / Copy conversation</button>
+  </div>
+</div>
+
+<script>
+// ===== QUICK PHRASES =====
+var QP = [{"category": "접수", "phrases": [{"id": "qp_001", "ko": "예약하셨나요?", "en": "Do you have an appointment?", "ja": "ご予約はありますか？", "zhCN": "您有预约吗？", "zhTW": "您有預約嗎？", "doctorCheckRequired": false}, {"id": "qp_002", "ko": "성함과 생년월일을 알려주세요.", "en": "Please tell me your name and date of birth.", "ja": "お名前と生年月日を教えてください。", "zhCN": "请告诉我您的姓名和出生日期。", "zhTW": "請告訴我您的姓名和出生日期。", "doctorCheckRequired": false}, {"id": "qp_003", "ko": "여권 또는 외국인등록증이 필요합니다.", "en": "We need your passport or alien registration card.", "ja": "パスポートまたは外国人登録証が必要です。", "zhCN": "需要您的护照或外国人登记证。", "zhTW": "需要您的護照或外國人登錄證。", "doctorCheckRequired": false}, {"id": "qp_004", "ko": "잠시만 기다려 주세요.", "en": "Please wait a moment.", "ja": "少々お待ちください。", "zhCN": "请稍等。", "zhTW": "請稍等。", "doctorCheckRequired": false}, {"id": "qp_007", "ko": "대기 시간이 발생할 수 있습니다.", "en": "There may be a waiting time.", "ja": "待ち時間が発生する場合があります。", "zhCN": "可能需要等待。", "zhTW": "可能需要等待。", "doctorCheckRequired": false}, {"id": "qp_008", "ko": "통역이 필요한 언어를 선택해주세요.", "en": "Please select the language you need for interpretation.", "ja": "通訳が必要な言語を選択してください。", "zhCN": "请选择您需要的翻译语言。", "zhTW": "請選擇您需要的翻譯語言。", "doctorCheckRequired": false}]}, {"category": "상담", "phrases": [{"id": "qp_005", "ko": "오늘 상담만 진행하시나요?", "en": "Are you here for consultation only today?", "ja": "本日は相談のみですか？", "zhCN": "今天只是咨询吗？", "zhTW": "今天只是諮詢嗎？", "doctorCheckRequired": false}, {"id": "qp_006", "ko": "오늘 바로 시술을 원하시나요?", "en": "Would you like to have the procedure today?", "ja": "本日すぐに施術をご希望ですか？", "zhCN": "您今天想直接做项目吗？", "zhTW": "您今天想直接做療程嗎？", "doctorCheckRequired": false}, {"id": "qp_009", "ko": "재시술 가능성", "en": "Possibility of additional treatment", "ja": "再施術の可能性", "zhCN": "可能需要再次治疗", "zhTW": "可能需要再次療程", "doctorCheckRequired": true}, {"id": "qp_033", "ko": "절개식 모발이식", "en": "FUT hair transplant", "ja": "FUT植毛", "zhCN": "切取式植发", "zhTW": "切取式植髮", "doctorCheckRequired": true}, {"id": "qp_034", "ko": "비절개식 모발이식", "en": "FUE hair transplant", "ja": "FUE植毛", "zhCN": "无痕植发", "zhTW": "無痕植髮", "doctorCheckRequired": true}, {"id": "qp_035", "ko": "모낭", "en": "Hair follicle", "ja": "毛包", "zhCN": "毛囊", "zhTW": "毛囊", "doctorCheckRequired": false}, {"id": "qp_036", "ko": "생착률", "en": "Graft survival rate", "ja": "生着率", "zhCN": "成活率", "zhTW": "存活率", "doctorCheckRequired": true}, {"id": "qp_037", "ko": "암흑기", "en": "Shedding phase", "ja": "脱落期", "zhCN": "脱落期", "zhTW": "脫落期", "doctorCheckRequired": false}, {"id": "qp_038", "ko": "M자 탈모", "en": "M-shaped hair loss", "ja": "M字型脱毛", "zhCN": "M型脱发", "zhTW": "M型掉髮", "doctorCheckRequired": false}]}, {"category": "진료", "phrases": [{"id": "qp_100", "ko": "어디가 불편하세요?", "en": "Where does it hurt?", "ja": "どこが痛いですか？", "zhCN": "哪里不舒服？", "zhTW": "哪裡不舒服？", "doctorCheckRequired": false}, {"id": "qp_101", "ko": "언제부터 증상이 있었나요?", "en": "When did the symptoms start?", "ja": "いつから症状がありますか？", "zhCN": "症状从什么时候开始的？", "zhTW": "症狀從什麼時候開始的？", "doctorCheckRequired": false}, {"id": "qp_102", "ko": "복용 중인 약이 있나요?", "en": "Are you taking any medication?", "ja": "服用中の薬はありますか？", "zhCN": "目前有在吃什么药吗？", "zhTW": "目前有在吃什麼藥嗎？", "doctorCheckRequired": true}, {"id": "qp_103", "ko": "알레르기가 있나요?", "en": "Do you have any allergies?", "ja": "アレルギーはありますか？", "zhCN": "有过敏吗？", "zhTW": "有過敏嗎？", "doctorCheckRequired": true}, {"id": "qp_104", "ko": "시술 전 동의서 작성이 필요합니다.", "en": "You need to sign a consent form before the procedure.", "ja": "施術前に同意書の記入が必要です。", "zhCN": "术前需要签署同意书。", "zhTW": "術前需要簽署同意書。", "doctorCheckRequired": false}, {"id": "qp_105", "ko": "통증이 있으면 말씀해 주세요.", "en": "Please let me know if you feel pain.", "ja": "痛みがあれば教えてください。", "zhCN": "如果疼请告诉我。", "zhTW": "如果痛請告訴我。", "doctorCheckRequired": false}, {"id": "qp_106", "ko": "마취가 필요합니다.", "en": "Anesthesia is needed.", "ja": "麻酔が必要です。", "zhCN": "需要麻醉。", "zhTW": "需要麻醉。", "doctorCheckRequired": true}, {"id": "qp_107", "ko": "금식이 필요합니다.", "en": "You need to fast.", "ja": "絶食が必要です。", "zhCN": "需要空腹。", "zhTW": "需要空腹。", "doctorCheckRequired": false}, {"id": "qp_108", "ko": "숨을 크게 쉬세요.", "en": "Take a deep breath.", "ja": "大きく息を吸ってください。", "zhCN": "请深呼吸。", "zhTW": "請深呼吸。", "doctorCheckRequired": false}, {"id": "qp_109", "ko": "움직이지 마세요.", "en": "Please don't move.", "ja": "動かないでください。", "zhCN": "请不要动。", "zhTW": "請不要動。", "doctorCheckRequired": false}]}, {"category": "결제", "phrases": [{"id": "qp_019", "ko": "상담비", "en": "Consultation fee", "ja": "相談料", "zhCN": "咨询费", "zhTW": "諮詢費", "doctorCheckRequired": false}, {"id": "qp_020", "ko": "검사비", "en": "Examination fee", "ja": "検査費", "zhCN": "检查费", "zhTW": "檢查費", "doctorCheckRequired": false}, {"id": "qp_021", "ko": "마취비", "en": "Anesthesia fee", "ja": "麻酔費", "zhCN": "麻醉费", "zhTW": "麻醉費", "doctorCheckRequired": false}, {"id": "qp_022", "ko": "약값", "en": "Medication cost", "ja": "薬代", "zhCN": "药费", "zhTW": "藥費", "doctorCheckRequired": false}, {"id": "qp_023", "ko": "추가 비용", "en": "Additional cost", "ja": "追加費用", "zhCN": "额外费用", "zhTW": "額外費用", "doctorCheckRequired": false}, {"id": "qp_024", "ko": "예약금", "en": "Deposit", "ja": "予約金", "zhCN": "预约金", "zhTW": "預約金", "doctorCheckRequired": false}, {"id": "qp_025", "ko": "취소 수수료", "en": "Cancellation fee", "ja": "キャンセル料", "zhCN": "取消手续费", "zhTW": "取消手續費", "doctorCheckRequired": false}, {"id": "qp_026", "ko": "환불 규정", "en": "Refund policy", "ja": "返金規定", "zhCN": "退款规定", "zhTW": "退款規定", "doctorCheckRequired": false}, {"id": "qp_027", "ko": "해외카드 결제 가능", "en": "International cards accepted", "ja": "海外カード決済可能", "zhCN": "可使用海外银行卡付款", "zhTW": "可使用海外信用卡付款", "doctorCheckRequired": false}]}, {"category": "주의사항", "phrases": [{"id": "qp_010", "ko": "시술 후 주의사항을 반드시 지켜주세요.", "en": "Please follow the post-treatment precautions carefully.", "ja": "施術後の注意事項を必ず守ってください。", "zhCN": "请务必遵守治疗后的注意事项。", "zhTW": "請務必遵守療程後的注意事項。", "doctorCheckRequired": false}, {"id": "qp_011", "ko": "오늘은 세안하지 마세요.", "en": "Do not wash your face today.", "ja": "本日は洗顔しないでください。", "zhCN": "今天请不要洗脸。", "zhTW": "今天請不要洗臉。", "doctorCheckRequired": false}, {"id": "qp_012", "ko": "24시간 동안 화장을 피해주세요.", "en": "Avoid makeup for 24 hours.", "ja": "24時間はメイクを避けてください。", "zhCN": "24小时内请避免化妆。", "zhTW": "24小時內請避免化妝。", "doctorCheckRequired": false}, {"id": "qp_013", "ko": "일주일간 음주와 흡연을 피해주세요.", "en": "Avoid alcohol and smoking for one week.", "ja": "1週間は飲酒と喫煙を避けてください。", "zhCN": "一周内请避免饮酒和吸烟。", "zhTW": "一週內請避免飲酒和吸菸。", "doctorCheckRequired": false}, {"id": "qp_014", "ko": "강한 운동은 피해주세요.", "en": "Avoid strenuous exercise.", "ja": "激しい運動は避けてください。", "zhCN": "请避免剧烈运动。", "zhTW": "請避免劇烈運動。", "doctorCheckRequired": false}, {"id": "qp_015", "ko": "붓기와 멍은 자연스러운 증상입니다.", "en": "Swelling and bruising are common symptoms.", "ja": "腫れや内出血は一般的な症状です。", "zhCN": "肿胀和淤青是常见症状。", "zhTW": "腫脹和瘀青是常見症狀。", "doctorCheckRequired": false}, {"id": "qp_016", "ko": "통증, 열감, 심한 붓기가 있으면 병원에 연락해주세요.", "en": "Contact the clinic if you have pain, heat, or severe swelling.", "ja": "痛み、熱感、強い腫れがある場合はクリニックに連絡してください。", "zhCN": "如有疼痛、发热感或严重肿胀，请联系医院。", "zhTW": "如有疼痛、發熱感或嚴重腫脹，請聯絡診所。", "doctorCheckRequired": true}, {"id": "qp_017", "ko": "처방받은 약을 정해진 시간에 복용해주세요.", "en": "Take the prescribed medication at the scheduled time.", "ja": "処方された薬を決められた時間に服用してください。", "zhCN": "请按时服用处方药。", "zhTW": "請按時服用處方藥。", "doctorCheckRequired": false}, {"id": "qp_018", "ko": "예약된 날짜에 내원해주세요.", "en": "Please visit the clinic on your scheduled date.", "ja": "予約日にご来院ください。", "zhCN": "请在预约日期来院。", "zhTW": "請在預約日期來院。", "doctorCheckRequired": false}]}, {"category": "응급", "phrases": [{"id": "qp_028", "ko": "숨쉬기 어렵습니다.", "en": "I have difficulty breathing.", "ja": "息が苦しいです。", "zhCN": "我呼吸困难。", "zhTW": "我呼吸困難。", "doctorCheckRequired": true}, {"id": "qp_029", "ko": "피가 납니다.", "en": "I am bleeding.", "ja": "出血しています。", "zhCN": "我在出血。", "zhTW": "我在出血。", "doctorCheckRequired": true}, {"id": "qp_030", "ko": "알레르기 반응이 있는 것 같습니다.", "en": "I think I am having an allergic reaction.", "ja": "アレルギー反応が出ているようです。", "zhCN": "我好像出现了过敏反应。", "zhTW": "我好像出現了過敏反應。", "doctorCheckRequired": true}, {"id": "qp_031", "ko": "보호자에게 연락해주세요.", "en": "Please contact my guardian.", "ja": "保護者に連絡してください。", "zhCN": "请联系我的监护人。", "zhTW": "請聯絡我的監護人。", "doctorCheckRequired": true}, {"id": "qp_032", "ko": "응급실에 가야 하나요?", "en": "Should I go to the emergency room?", "ja": "救急外来に行く必要がありますか？", "zhCN": "我需要去急诊室吗？", "zhTW": "我需要去急診室嗎？", "doctorCheckRequired": true}]}];
+
+
+// ===== MEDICAL DICTIONARY (284 terms for matching) =====
+var DICT = [{"ko": "항노화 수액", "en": "Anti-aging IV", "ja": "アンチエイジング点滴", "cn": "抗衰老输液", "tw": "抗衰老輸液", "dc": false}, {"ko": "스킨부스터(재생주사)", "en": "Skin booster", "ja": "スキンブースター", "cn": "水光针", "tw": "水光針", "dc": false}, {"ko": "NAD 플러스 수액", "en": "NAD+ IV", "ja": "NAD+点滴", "cn": "NAD+输液", "tw": "NAD+輸液", "dc": false}, {"ko": "글루타치온 수액", "en": "Glutathione IV", "ja": "グルタチオン点滴", "cn": "谷胱甘肽输液", "tw": "穀胱甘肽輸液", "dc": false}, {"ko": "에너지·면역 수액", "en": "Energy/Immunity IV", "ja": "エナジー・免疫点滴", "cn": "能量·免疫输液", "tw": "能量·免疫輸液", "dc": false}, {"ko": "실리프팅", "en": "Thread lifting", "ja": "糸リフト", "cn": "线雕提升", "tw": "埋線拉提", "dc": false}, {"ko": "PRP 재생치료", "en": "PRP therapy", "ja": "PRP再生治療", "cn": "PRP再生治疗", "tw": "PRP再生治療", "dc": false}, {"ko": "질플란트(질 필러)", "en": "Vaginal Collagen Implant", "ja": "膣コラーゲンインプラント", "cn": "阴道胶原植入", "tw": "陰道膠原植入", "dc": false}, {"ko": "질 필러", "en": "Vaginal filler", "ja": "膣フィラー", "cn": "阴道填充", "tw": "陰道填充", "dc": false}, {"ko": "질 타이트닝", "en": "Vaginal tightening", "ja": "膣タイトニング", "cn": "阴道紧缩", "tw": "陰道緊縮", "dc": false}, {"ko": "질 레이저 재생", "en": "Vaginal rejuvenation", "ja": "膣レーザー若返り", "cn": "阴道激光再生", "tw": "陰道雷射再生", "dc": false}, {"ko": "대음순·소음순 필러", "en": "Labia filler", "ja": "大陰唇・小陰唇フィラー", "cn": "大小阴唇填充", "tw": "大小陰唇填充", "dc": false}, {"ko": "요실금 레이저", "en": "Incontinence Laser", "ja": "尿失禁レーザー", "cn": "尿失禁激光", "tw": "尿失禁雷射", "dc": false}, {"ko": "결혼전 케어", "en": "Pre-marital Checkup", "ja": "ブライダルチェック", "cn": "婚前检查", "tw": "婚前檢查", "dc": false}, {"ko": "모발이식(FUE/FUT)", "en": "Hair transplant (FUE/FUT)", "ja": "植毛(FUE/FUT)", "cn": "毛发移植(FUE/FUT)", "tw": "毛髮移植(FUE/FUT)", "dc": false}, {"ko": "헤어라인 교정", "en": "Hairline correction", "ja": "ヘアライン矯正", "cn": "发际线矫正", "tw": "髮際線矯正", "dc": false}, {"ko": "정수리 탈모", "en": "Crown thinning", "ja": "頭頂部薄毛", "cn": "头顶脱发", "tw": "頭頂脫髮", "dc": false}, {"ko": "여성 헤어라인 디자인", "en": "Female hairline design", "ja": "女性ヘアラインデザイン", "cn": "女性发际线设计", "tw": "女性髮際線設計", "dc": false}, {"ko": "두피 PRP", "en": "PRP scalp treatment", "ja": "頭皮PRP治療", "cn": "头皮PRP治疗", "tw": "頭皮PRP治療", "dc": false}, {"ko": "두피 관리", "en": "Scalp care", "ja": "スカルプケア", "cn": "头皮护理", "tw": "頭皮護理", "dc": false}, {"ko": "리주란/스킨부스터", "en": "Rejuran / Skin booster", "ja": "リジュラン/スキンブースター", "cn": "婴儿针/水光针", "tw": "嬰兒針/水光針", "dc": false}, {"ko": "리프팅(슈링크/써마지)", "en": "Lifting (HIFU / Thermage)", "ja": "リフティング(HIFU/サーマジ)", "cn": "提升(超声刀/热玛吉)", "tw": "拉提(超聲刀/熱瑪吉)", "dc": false}, {"ko": "레이저 토닝", "en": "Laser toning", "ja": "レーザートーニング", "cn": "激光嫩肤", "tw": "雷射淨膚", "dc": false}, {"ko": "미백", "en": "Whitening", "ja": "美白", "cn": "美白", "tw": "美白", "dc": false}, {"ko": "색소침착", "en": "Pigmentation", "ja": "色素沈着", "cn": "色素沉着", "tw": "色素沉著", "dc": false}, {"ko": "여드름 / 흉터", "en": "Acne / Acne scars", "ja": "ニキビ/ニキビ跡", "cn": "痤疮/痘疤", "tw": "痤瘡/痘疤", "dc": false}, {"ko": "모공", "en": "Pores", "ja": "毛穴", "cn": "毛孔", "tw": "毛孔", "dc": false}, {"ko": "홍조/주사", "en": "Redness / Rosacea", "ja": "赤ら顔/酒さ", "cn": "红血丝/酒糟鼻", "tw": "泛紅/酒糟", "dc": false}, {"ko": "샤넬주사", "en": "Chanel injection", "ja": "シャネル注射", "cn": "香奈儿注射", "tw": "香奈兒注射", "dc": false}, {"ko": "쌍꺼풀", "en": "Double eyelid", "ja": "二重まぶた", "cn": "双眼皮", "tw": "雙眼皮", "dc": false}, {"ko": "코성형", "en": "Rhinoplasty", "ja": "鼻整形", "cn": "鼻整形", "tw": "鼻整形", "dc": false}, {"ko": "가슴 성형", "en": "Breast surgery", "ja": "豊胸手術", "cn": "隆胸手术", "tw": "隆胸手術", "dc": false}, {"ko": "안면윤곽 / 턱라인 교정", "en": "Face contour / Chin correction", "ja": "輪郭整形/顎ライン矯正", "cn": "面部轮廓/下颌矫正", "tw": "面部輪廓/下顎矯正", "dc": false}, {"ko": "안면거상", "en": "Facelift", "ja": "フェイスリフト", "cn": "面部拉皮", "tw": "面部拉皮", "dc": false}, {"ko": "지방이식", "en": "Fat graft", "ja": "脂肪移植", "cn": "脂肪移植", "tw": "脂肪移植", "dc": false}, {"ko": "지방흡입", "en": "Liposuction", "ja": "脂肪吸引", "cn": "吸脂", "tw": "抽脂", "dc": false}, {"ko": "재수술", "en": "Revision surgery", "ja": "再手術", "cn": "修复手术", "tw": "修復手術", "dc": false}, {"ko": "임플란트", "en": "Implant", "ja": "インプラント", "cn": "种植牙", "tw": "植牙", "dc": false}, {"ko": "교정 / 인비절라인", "en": "Orthodontics / Invisalign", "ja": "矯正/インビザライン", "cn": "正畸/隐适美", "tw": "矯正/隱適美", "dc": false}, {"ko": "라미네이트", "en": "Veneers", "ja": "ラミネートベニア", "cn": "瓷贴面", "tw": "瓷貼面", "dc": false}, {"ko": "치아미백", "en": "Whitening", "ja": "ホワイトニング", "cn": "牙齿美白", "tw": "牙齒美白", "dc": false}, {"ko": "전체 구강 재건", "en": "Full-mouth restoration", "ja": "フルマウスリハビリテーション", "cn": "全口重建", "tw": "全口重建", "dc": false}, {"ko": "잇몸치료", "en": "Gum treatment", "ja": "歯周治療", "cn": "牙龈治疗", "tw": "牙齦治療", "dc": false}, {"ko": "라식,라섹,스마일라식", "en": "LASIK / LASEK / SMILE", "ja": "レーシック/ラセック/スマイル", "cn": "准分子/全飞秒", "tw": "準分子/全飛秒", "dc": false}, {"ko": "안구건조증", "en": "Dry Eye Treatment", "ja": "ドライアイ治療", "cn": "干眼症治疗", "tw": "乾眼症治療", "dc": false}, {"ko": "비문증(레이저치료포함)", "en": "Floaters Treatment", "ja": "飛蚊症治療", "cn": "飞蚊症治疗", "tw": "飛蚊症治療", "dc": false}, {"ko": "백내장 검사/수술", "en": "Cataract Check / Surgery", "ja": "白内障検査/手術", "cn": "白内障检查/手术", "tw": "白內障檢查/手術", "dc": false}, {"ko": "어깨 통증", "en": "Shoulder pain", "ja": "肩の痛み", "cn": "肩痛", "tw": "肩痛", "dc": false}, {"ko": "무릎 통증", "en": "Knee pain", "ja": "膝の痛み", "cn": "膝痛", "tw": "膝痛", "dc": false}, {"ko": "허리 통증", "en": "Back pain", "ja": "腰痛", "cn": "腰痛", "tw": "腰痛", "dc": false}, {"ko": "디스크", "en": "Disc", "ja": "椎間板ヘルニア", "cn": "椎间盘突出", "tw": "椎間盤突出", "dc": false}, {"ko": "오십견", "en": "Frozen shoulder", "ja": "五十肩", "cn": "肩周炎", "tw": "肩周炎", "dc": false}, {"ko": "스포츠 손상", "en": "Sports injury", "ja": "スポーツ外傷", "cn": "运动损伤", "tw": "運動損傷", "dc": false}, {"ko": "물리치료", "en": "Physical therapy", "ja": "理学療法", "cn": "物理治疗", "tw": "物理治療", "dc": false}, {"ko": "이명", "en": "Tinnitus", "ja": "耳鳴り", "cn": "耳鸣", "tw": "耳鳴", "dc": false}, {"ko": "청력 저하", "en": "Hearing loss", "ja": "難聴", "cn": "听力下降", "tw": "聽力下降", "dc": false}, {"ko": "축농증", "en": "Sinusitis", "ja": "副鼻腔炎", "cn": "鼻窦炎", "tw": "鼻竇炎", "dc": false}, {"ko": "비염", "en": "Rhinitis", "ja": "鼻炎", "cn": "鼻炎", "tw": "鼻炎", "dc": false}, {"ko": "어지러움", "en": "Dizziness", "ja": "めまい", "cn": "头晕", "tw": "頭暈", "dc": false}, {"ko": "귀 염증", "en": "Ear infection", "ja": "耳感染症", "cn": "耳部感染", "tw": "耳部感染", "dc": false}, {"ko": "하지정맥류", "en": "Varicose veins", "ja": "下肢静脈瘤", "cn": "下肢静脉曲张", "tw": "下肢靜脈曲張", "dc": false}, {"ko": "모세혈관 확장증", "en": "Spider veins", "ja": "くも状静脈", "cn": "蜘蛛静脉", "tw": "蜘蛛靜脈", "dc": false}, {"ko": "혈관 레이저", "en": "Laser varicose treatment", "ja": "血管レーザー治療", "cn": "血管激光治疗", "tw": "血管雷射治療", "dc": false}, {"ko": "베나실 치료", "en": "VenaSeal", "ja": "ベナシール", "cn": "VenaSeal治疗", "tw": "VenaSeal治療", "dc": false}, {"ko": "경화요법", "en": "Sclerotherapy", "ja": "硬化療法", "cn": "硬化疗法", "tw": "硬化療法", "dc": false}, {"ko": "기본 검진", "en": "Basic checkup", "ja": "基本健診", "cn": "基本体检", "tw": "基本體檢", "dc": false}, {"ko": "프리미엄 종합검진", "en": "Premium full-body checkup", "ja": "プレミアム総合健診", "cn": "高端全身体检", "tw": "高端全身體檢", "dc": false}, {"ko": "암 검사", "en": "Cancer screening", "ja": "がん検診", "cn": "癌症筛查", "tw": "癌症篩檢", "dc": false}, {"ko": "심혈관 검사", "en": "Heart & vascular screening", "ja": "心血管検査", "cn": "心血管检查", "tw": "心血管檢查", "dc": false}, {"ko": "남성 검진", "en": "Men's checkup", "ja": "男性健診", "cn": "男性体检", "tw": "男性體檢", "dc": false}, {"ko": "여성 검진", "en": "Women's checkup", "ja": "女性健診", "cn": "女性体检", "tw": "女性體檢", "dc": false}, {"ko": "알레르기 검사", "en": "Allergy test", "ja": "アレルギー検査", "cn": "过敏测试", "tw": "過敏測試", "dc": false}, {"ko": "지방감소", "en": "Fat reduction", "ja": "脂肪減少", "cn": "脂肪减少", "tw": "脂肪減少", "dc": false}, {"ko": "체형교정", "en": "Body shaping", "ja": "ボディシェイピング", "cn": "体型矫正", "tw": "體型矯正", "dc": false}, {"ko": "EMS/HIFEM 바디조각", "en": "HIFEM/EMS body sculpting", "ja": "EMS/HIFEMボディスカルプティング", "cn": "EMS/HIFEM体雕", "tw": "EMS/HIFEM體雕", "dc": false}, {"ko": "주사 다이어트", "en": "Injection slimming", "ja": "脂肪溶解注射", "cn": "溶脂针", "tw": "溶脂針", "dc": false}, {"ko": "체중 관리", "en": "Weight management", "ja": "体重管理", "cn": "体重管理", "tw": "體重管理", "dc": false}, {"ko": "진료", "en": "Medical consultation", "ja": "診察", "cn": "问诊", "tw": "問診", "dc": false}, {"ko": "초진", "en": "First visit", "ja": "初診", "cn": "初诊", "tw": "初診", "dc": false}, {"ko": "재진", "en": "Follow-up visit", "ja": "再診", "cn": "复诊", "tw": "複診", "dc": false}, {"ko": "예약", "en": "Reservation / Appointment", "ja": "予約", "cn": "预约", "tw": "預約", "dc": false}, {"ko": "접수", "en": "Registration / Check-in", "ja": "受付", "cn": "挂号", "tw": "掛號", "dc": false}, {"ko": "수납", "en": "Payment / Checkout", "ja": "会計", "cn": "缴费", "tw": "繳費", "dc": false}, {"ko": "처방전", "en": "Prescription", "ja": "処方箋", "cn": "处方", "tw": "處方", "dc": false}, {"ko": "진단서", "en": "Medical certificate", "ja": "診断書", "cn": "诊断书", "tw": "診斷書", "dc": false}, {"ko": "소견서", "en": "Medical opinion", "ja": "所見書", "cn": "医疗意见书", "tw": "醫療意見書", "dc": false}, {"ko": "동의서", "en": "Consent form", "ja": "同意書", "cn": "同意书", "tw": "同意書", "dc": false}, {"ko": "퇴원", "en": "Discharge", "ja": "退院", "cn": "出院", "tw": "出院", "dc": false}, {"ko": "입원", "en": "Admission", "ja": "入院", "cn": "住院", "tw": "住院", "dc": false}, {"ko": "국소마취", "en": "Local anesthesia", "ja": "局所麻酔", "cn": "局部麻醉", "tw": "局部麻醉", "dc": false}, {"ko": "전신마취", "en": "General anesthesia", "ja": "全身麻酔", "cn": "全身麻醉", "tw": "全身麻醉", "dc": false}, {"ko": "수면마취(의식하진정)", "en": "Sedation", "ja": "鎮静麻酔", "cn": "睡眠麻醉", "tw": "睡眠麻醉", "dc": false}, {"ko": "마취크림", "en": "Numbing cream", "ja": "麻酔クリーム", "cn": "麻醉膏", "tw": "麻醉膏", "dc": false}, {"ko": "시술", "en": "Procedure (non-surgical)", "ja": "施術", "cn": "微创操作", "tw": "微創操作", "dc": false}, {"ko": "수술", "en": "Surgery / Operation", "ja": "手術", "cn": "手术", "tw": "手術", "dc": false}, {"ko": "비수술", "en": "Non-surgical", "ja": "非手術", "cn": "非手术", "tw": "非手術", "dc": false}, {"ko": "최소침습", "en": "Minimally invasive", "ja": "低侵襲", "cn": "微创", "tw": "微創", "dc": false}, {"ko": "레이저", "en": "Laser", "ja": "レーザー", "cn": "激光", "tw": "雷射", "dc": false}, {"ko": "고주파", "en": "Radiofrequency (RF)", "ja": "高周波", "cn": "射频", "tw": "射頻", "dc": false}, {"ko": "초음파", "en": "Ultrasound", "ja": "超音波", "cn": "超声波", "tw": "超聲波", "dc": false}, {"ko": "필러", "en": "Filler", "ja": "フィラー", "cn": "填充剂", "tw": "填充劑", "dc": false}, {"ko": "보톡스", "en": "Botox", "ja": "ボトックス", "cn": "肉毒杆菌", "tw": "肉毒桿菌", "dc": false}, {"ko": "주사", "en": "Injection", "ja": "注射", "cn": "注射", "tw": "注射", "dc": false}, {"ko": "봉합", "en": "Suture / Stitches", "ja": "縫合", "cn": "缝合", "tw": "縫合", "dc": false}, {"ko": "발사(실밥제거)", "en": "Stitch removal", "ja": "抜糸", "cn": "拆线", "tw": "拆線", "dc": false}, {"ko": "드레싱", "en": "Dressing", "ja": "ドレッシング", "cn": "换药", "tw": "換藥", "dc": false}, {"ko": "붕대", "en": "Bandage", "ja": "包帯", "cn": "绷带", "tw": "繃帶", "dc": false}, {"ko": "통증", "en": "Pain", "ja": "痛み", "cn": "疼痛", "tw": "疼痛", "dc": false}, {"ko": "붓기(부종)", "en": "Swelling", "ja": "腫れ(浮腫)", "cn": "肿胀", "tw": "腫脹", "dc": false}, {"ko": "멍(내출혈)", "en": "Bruising", "ja": "あざ(内出血)", "cn": "淤青", "tw": "瘀青", "dc": false}, {"ko": "출혈", "en": "Bleeding", "ja": "出血", "cn": "出血", "tw": "出血", "dc": false}, {"ko": "감염", "en": "Infection", "ja": "感染", "cn": "感染", "tw": "感染", "dc": false}, {"ko": "염증", "en": "Inflammation", "ja": "炎症", "cn": "炎症", "tw": "炎症", "dc": false}, {"ko": "알레르기 반응", "en": "Allergic reaction", "ja": "アレルギー反応", "cn": "过敏反应", "tw": "過敏反應", "dc": false}, {"ko": "흉터", "en": "Scar", "ja": "傷跡", "cn": "疤痕", "tw": "疤痕", "dc": false}, {"ko": "가려움", "en": "Itching", "ja": "かゆみ", "cn": "瘙痒", "tw": "搔癢", "dc": false}, {"ko": "저림/마비", "en": "Numbness / Tingling", "ja": "しびれ/麻痺", "cn": "麻木/刺痛", "tw": "麻木/刺痛", "dc": false}, {"ko": "발열", "en": "Fever", "ja": "発熱", "cn": "发热", "tw": "發熱", "dc": false}, {"ko": "두통", "en": "Headache", "ja": "頭痛", "cn": "头痛", "tw": "頭痛", "dc": false}, {"ko": "다운타임", "en": "Downtime", "ja": "ダウンタイム", "cn": "恢复期", "tw": "恢復期", "dc": false}, {"ko": "회복기간", "en": "Recovery period", "ja": "回復期間", "cn": "恢复时间", "tw": "恢復時間", "dc": false}, {"ko": "사후관리", "en": "Aftercare", "ja": "アフターケア", "cn": "术后护理", "tw": "術後護理", "dc": false}, {"ko": "경과관찰", "en": "Follow-up observation", "ja": "経過観察", "cn": "随访观察", "tw": "隨訪觀察", "dc": false}, {"ko": "실밥 제거일", "en": "Stitch removal date", "ja": "抜糸日", "cn": "拆线日", "tw": "拆線日", "dc": false}, {"ko": "세안 가능일", "en": "Face washing allowed date", "ja": "洗顔可能日", "cn": "可洗脸日期", "tw": "可洗臉日期", "dc": false}, {"ko": "화장 가능일", "en": "Makeup allowed date", "ja": "メイク可能日", "cn": "可化妆日期", "tw": "可化妝日期", "dc": false}, {"ko": "운동 가능일", "en": "Exercise allowed date", "ja": "運動可能日", "cn": "可运动日期", "tw": "可運動日期", "dc": false}, {"ko": "비행 가능일", "en": "Flight allowed date", "ja": "飛行可能日", "cn": "可搭机日期", "tw": "可搭機日期", "dc": false}, {"ko": "음주 금지", "en": "No alcohol", "ja": "飲酒禁止", "cn": "禁止饮酒", "tw": "禁止飲酒", "dc": false}, {"ko": "흡연 금지", "en": "No smoking", "ja": "喫煙禁止", "cn": "禁止吸烟", "tw": "禁止吸菸", "dc": false}, {"ko": "사우나 금지", "en": "No sauna", "ja": "サウナ禁止", "cn": "禁止桑拿", "tw": "禁止桑拿", "dc": false}, {"ko": "냉찜질", "en": "Cold compress", "ja": "冷湿布", "cn": "冷敷", "tw": "冷敷", "dc": false}, {"ko": "압박붕대", "en": "Compression bandage", "ja": "圧迫包帯", "cn": "加压绷带", "tw": "加壓繃帶", "dc": false}, {"ko": "혈액검사", "en": "Blood test", "ja": "血液検査", "cn": "血液检查", "tw": "血液檢查", "dc": false}, {"ko": "소변검사", "en": "Urine test", "ja": "尿検査", "cn": "尿检查", "tw": "尿檢查", "dc": false}, {"ko": "X선(엑스레이)", "en": "X-ray", "ja": "レントゲン", "cn": "X光", "tw": "X光", "dc": false}, {"ko": "CT(컴퓨터단층촬영)", "en": "CT scan", "ja": "CT検査", "cn": "CT检查", "tw": "CT檢查", "dc": false}, {"ko": "MRI(자기공명영상)", "en": "MRI", "ja": "MRI検査", "cn": "核磁共振", "tw": "核磁共振", "dc": false}, {"ko": "초음파 검사", "en": "Ultrasound exam", "ja": "超音波検査", "cn": "超声检查", "tw": "超聲檢查", "dc": false}, {"ko": "내시경", "en": "Endoscopy", "ja": "内視鏡", "cn": "内窥镜", "tw": "內視鏡", "dc": false}, {"ko": "심전도", "en": "ECG / EKG", "ja": "心電図", "cn": "心电图", "tw": "心電圖", "dc": false}, {"ko": "조직검사(생검)", "en": "Biopsy", "ja": "生検", "cn": "活检", "tw": "活檢", "dc": false}, {"ko": "진통제", "en": "Painkiller", "ja": "鎮痛剤", "cn": "止痛药", "tw": "止痛藥", "dc": false}, {"ko": "항생제", "en": "Antibiotics", "ja": "抗生物質", "cn": "抗生素", "tw": "抗生素", "dc": false}, {"ko": "소염제", "en": "Anti-inflammatory", "ja": "消炎剤", "cn": "消炎药", "tw": "消炎藥", "dc": false}, {"ko": "연고", "en": "Ointment", "ja": "軟膏", "cn": "药膏", "tw": "藥膏", "dc": false}, {"ko": "항히스타민제", "en": "Antihistamine", "ja": "抗ヒスタミン剤", "cn": "抗组胺药", "tw": "抗組織胺藥", "dc": false}, {"ko": "수면제", "en": "Sleeping pill", "ja": "睡眠薬", "cn": "安眠药", "tw": "安眠藥", "dc": false}, {"ko": "얼굴", "en": "Face", "ja": "顔", "cn": "脸", "tw": "臉", "dc": false}, {"ko": "이마", "en": "Forehead", "ja": "額", "cn": "额头", "tw": "額頭", "dc": false}, {"ko": "눈", "en": "Eyes", "ja": "目", "cn": "眼睛", "tw": "眼睛", "dc": false}, {"ko": "코", "en": "Nose", "ja": "鼻", "cn": "鼻子", "tw": "鼻子", "dc": false}, {"ko": "입", "en": "Mouth", "ja": "口", "cn": "嘴", "tw": "嘴", "dc": false}, {"ko": "턱", "en": "Chin / Jaw", "ja": "顎", "cn": "下巴", "tw": "下巴", "dc": false}, {"ko": "볼", "en": "Cheek", "ja": "頬", "cn": "脸颊", "tw": "臉頰", "dc": false}, {"ko": "목", "en": "Neck", "ja": "首", "cn": "脖子", "tw": "脖子", "dc": false}, {"ko": "가슴", "en": "Chest / Breast", "ja": "胸", "cn": "胸部", "tw": "胸部", "dc": false}, {"ko": "배", "en": "Abdomen", "ja": "腹部", "cn": "腹部", "tw": "腹部", "dc": false}, {"ko": "허리", "en": "Waist / Lower back", "ja": "腰", "cn": "腰", "tw": "腰", "dc": false}, {"ko": "팔", "en": "Arm", "ja": "腕", "cn": "手臂", "tw": "手臂", "dc": false}, {"ko": "다리", "en": "Leg", "ja": "脚", "cn": "腿", "tw": "腿", "dc": false}, {"ko": "두피", "en": "Scalp", "ja": "頭皮", "cn": "头皮", "tw": "頭皮", "dc": false}, {"ko": "잇몸", "en": "Gums", "ja": "歯茎", "cn": "牙龈", "tw": "牙齦", "dc": false}, {"ko": "어디가 아프세요?", "en": "Where does it hurt?", "ja": "どこが痛いですか？", "cn": "哪里疼？", "tw": "哪裡痛？", "dc": false}, {"ko": "언제부터 아팠어요?", "en": "When did it start?", "ja": "いつから痛いですか？", "cn": "从什么时候开始的？", "tw": "從什麼時候開始的？", "dc": false}, {"ko": "알레르기가 있으세요?", "en": "Do you have any allergies?", "ja": "アレルギーはありますか？", "cn": "有过敏吗？", "tw": "有過敏嗎？", "dc": false}, {"ko": "복용 중인 약이 있나요?", "en": "Are you taking any medication?", "ja": "服用中の薬はありますか？", "cn": "目前有在吃什么药吗？", "tw": "目前有在吃什麼藥嗎？", "dc": false}, {"ko": "임신 가능성이 있나요?", "en": "Is there a chance of pregnancy?", "ja": "妊娠の可能性はありますか？", "cn": "有怀孕的可能吗？", "tw": "有懷孕的可能嗎？", "dc": false}, {"ko": "수술 경험이 있으세요?", "en": "Have you had surgery before?", "ja": "手術経験はありますか？", "cn": "做过手术吗？", "tw": "做過手術嗎？", "dc": false}, {"ko": "식사는 하셨나요?", "en": "Have you eaten?", "ja": "食事はされましたか？", "cn": "吃饭了吗？", "tw": "吃飯了嗎？", "dc": false}, {"ko": "금식이 필요합니다", "en": "You need to fast", "ja": "絶食が必要です", "cn": "需要空腹", "tw": "需要空腹", "dc": false}, {"ko": "마취가 필요합니다", "en": "Anesthesia is needed", "ja": "麻酔が必要です", "cn": "需要麻醉", "tw": "需要麻醉", "dc": false}, {"ko": "통증이 있으면 말씀해 주세요", "en": "Please let me know if you feel pain", "ja": "痛みがあれば教えてください", "cn": "如果疼请告诉我", "tw": "如果痛請告訴我", "dc": false}, {"ko": "숨을 크게 쉬세요", "en": "Take a deep breath", "ja": "大きく息を吸ってください", "cn": "请深呼吸", "tw": "請深呼吸", "dc": false}, {"ko": "움직이지 마세요", "en": "Please don't move", "ja": "動かないでください", "cn": "请不要动", "tw": "請不要動", "dc": false}, {"ko": "다음 예약은 ~일 후입니다", "en": "Your next appointment is in ~ days", "ja": "次の予約は〜日後です", "cn": "下次预约是~天后", "tw": "下次預約是~天後", "dc": false}, {"ko": "이 약을 하루 ~번 드세요", "en": "Take this medicine ~ times a day", "ja": "この薬を1日〜回飲んでください", "cn": "这个药每天吃~次", "tw": "這個藥每天吃~次", "dc": false}, {"ko": "진료비", "en": "Medical fee", "ja": "診療費", "cn": "诊疗费", "tw": "診療費", "dc": false}, {"ko": "시술비", "en": "Procedure fee", "ja": "施術費", "cn": "手术费", "tw": "手術費", "dc": false}, {"ko": "부가세 포함", "en": "Tax included", "ja": "税込", "cn": "含税", "tw": "含稅", "dc": false}, {"ko": "현금", "en": "Cash", "ja": "現金", "cn": "现金", "tw": "現金", "dc": false}, {"ko": "카드 결제", "en": "Card payment", "ja": "カード決済", "cn": "刷卡", "tw": "刷卡", "dc": false}, {"ko": "영수증", "en": "Receipt", "ja": "領収書", "cn": "收据", "tw": "收據", "dc": false}, {"ko": "환불", "en": "Refund", "ja": "返金", "cn": "退款", "tw": "退款", "dc": false}, {"ko": "보험 적용 안됨", "en": "Not covered by insurance", "ja": "保険適用外", "cn": "不在保险范围内", "tw": "不在保險範圍內", "dc": false}, {"ko": "견적서", "en": "Price estimate", "ja": "見積書", "cn": "报价单", "tw": "報價單", "dc": false}, {"ko": "예약하셨나요?", "en": "Do you have an appointment?", "ja": "ご予約はありますか？", "cn": "您有预约吗？", "tw": "您有預約嗎？", "dc": false}, {"ko": "성함과 생년월일을 알려주세요.", "en": "Please tell me your name and date of birth.", "ja": "お名前と生年月日を教えてください。", "cn": "请告诉我您的姓名和出生日期。", "tw": "請告訴我您的姓名和出生日期。", "dc": false}, {"ko": "여권 또는 외국인등록증이 필요합니다.", "en": "We need your passport or alien registration card.", "ja": "パスポートまたは外国人登録証が必要です。", "cn": "需要您的护照或外国人登记证。", "tw": "需要您的護照或外國人登錄證。", "dc": false}, {"ko": "잠시만 기다려 주세요.", "en": "Please wait a moment.", "ja": "少々お待ちください。", "cn": "请稍等。", "tw": "請稍等。", "dc": false}, {"ko": "오늘 상담만 진행하시나요?", "en": "Are you here for consultation only today?", "ja": "本日は相談のみですか？", "cn": "今天只是咨询吗？", "tw": "今天只是諮詢嗎？", "dc": false}, {"ko": "오늘 바로 시술을 원하시나요?", "en": "Would you like to have the procedure today?", "ja": "本日すぐに施術をご希望ですか？", "cn": "您今天想直接做项目吗？", "tw": "您今天想直接做療程嗎？", "dc": false}, {"ko": "대기 시간이 발생할 수 있습니다.", "en": "There may be a waiting time.", "ja": "待ち時間が発生する場合があります。", "cn": "可能需要等待。", "tw": "可能需要等待。", "dc": false}, {"ko": "통역이 필요한 언어를 선택해주세요.", "en": "Please select the language you need for interpretation.", "ja": "通訳が必要な言語を選択してください。", "cn": "请选择您需要的翻译语言。", "tw": "請選擇您需要的翻譯語言。", "dc": false}, {"ko": "부작용", "en": "Side effects", "ja": "副作用", "cn": "副作用", "tw": "副作用", "dc": true}, {"ko": "합병증", "en": "Complications", "ja": "合併症", "cn": "并发症", "tw": "併發症", "dc": true}, {"ko": "일시적인 증상", "en": "Temporary symptoms", "ja": "一時的な症状", "cn": "暂时性症状", "tw": "暫時性症狀", "dc": false}, {"ko": "드물게 발생할 수 있습니다.", "en": "It may occur rarely.", "ja": "まれに起こることがあります。", "cn": "可能会少见地发生。", "tw": "可能會少見地發生。", "dc": true}, {"ko": "결과는 개인차가 있습니다.", "en": "Results may vary from person to person.", "ja": "結果には個人差があります。", "cn": "效果因人而异。", "tw": "效果因人而異。", "dc": true}, {"ko": "100% 보장할 수 없습니다.", "en": "Results cannot be guaranteed 100%.", "ja": "結果を100％保証することはできません。", "cn": "不能100%保证效果。", "tw": "不能100%保證效果。", "dc": true}, {"ko": "비대칭", "en": "Asymmetry", "ja": "左右差 / 非対称", "cn": "不对称", "tw": "不對稱", "dc": true}, {"ko": "색소침착", "en": "Pigmentation", "ja": "色素沈着", "cn": "色素沉着", "tw": "色素沉著", "dc": true}, {"ko": "감각 저하", "en": "Reduced sensation", "ja": "感覚の低下", "cn": "感觉减退", "tw": "感覺減退", "dc": true}, {"ko": "신경 손상", "en": "Nerve damage", "ja": "神経損傷", "cn": "神经损伤", "tw": "神經損傷", "dc": true}, {"ko": "괴사", "en": "Necrosis", "ja": "壊死", "cn": "坏死", "tw": "壞死", "dc": true}, {"ko": "재시술 가능성", "en": "Possibility of additional treatment", "ja": "再施術の可能性", "cn": "可能需要再次治疗", "tw": "可能需要再次療程", "dc": true}, {"ko": "시술 전 동의서 작성이 필요합니다.", "en": "You need to sign a consent form before the procedure.", "ja": "施術前に同意書の作成が必要です。", "cn": "治疗前需要签署同意书。", "tw": "療程前需要簽署同意書。", "dc": true}, {"ko": "설명을 충분히 들었고 이해했는지 확인합니다.", "en": "Please confirm that you have received and understood the explanation.", "ja": "説明を十分に受け、理解したことを確認してください。", "cn": "请确认您已充分听取并理解说明。", "tw": "請確認您已充分聽取並理解說明。", "dc": true}, {"ko": "최종 의학적 판단은 담당 의료진이 결정합니다.", "en": "The final medical decision will be made by the medical staff.", "ja": "最終的な医学的判断は担当医療スタッフが行います。", "cn": "最终医学判断由负责医护人员决定。", "tw": "最終醫學判斷由負責醫護人員決定。", "dc": true}, {"ko": "시술 후 주의사항을 반드시 지켜주세요.", "en": "Please follow the post-treatment precautions carefully.", "ja": "施術後の注意事項を必ず守ってください。", "cn": "请务必遵守治疗后的注意事项。", "tw": "請務必遵守療程後的注意事項。", "dc": false}, {"ko": "임신 중", "en": "Pregnant", "ja": "妊娠中", "cn": "怀孕中", "tw": "懷孕中", "dc": true}, {"ko": "수유 중", "en": "Breastfeeding", "ja": "授乳中", "cn": "哺乳期", "tw": "哺乳期", "dc": true}, {"ko": "항응고제 복용", "en": "Taking anticoagulants", "ja": "抗凝固薬を服用中", "cn": "正在服用抗凝药", "tw": "正在服用抗凝血藥", "dc": true}, {"ko": "당뇨", "en": "Diabetes", "ja": "糖尿病", "cn": "糖尿病", "tw": "糖尿病", "dc": true}, {"ko": "고혈압", "en": "High blood pressure", "ja": "高血圧", "cn": "高血压", "tw": "高血壓", "dc": true}, {"ko": "심장질환", "en": "Heart disease", "ja": "心疾患", "cn": "心脏疾病", "tw": "心臟疾病", "dc": true}, {"ko": "켈로이드 체질", "en": "Keloid-prone skin", "ja": "ケロイド体質", "cn": "瘢痕疙瘩体质", "tw": "蟹足腫體質", "dc": true}, {"ko": "마취 알레르기", "en": "Anesthesia allergy", "ja": "麻酔アレルギー", "cn": "麻醉过敏", "tw": "麻醉過敏", "dc": true}, {"ko": "최근 수술 이력", "en": "Recent surgery history", "ja": "最近の手術歴", "cn": "近期手术史", "tw": "近期手術史", "dc": true}, {"ko": "복용 중인 약", "en": "Current medications", "ja": "服用中の薬", "cn": "正在服用的药物", "tw": "正在服用的藥物", "dc": true}, {"ko": "오늘은 세안하지 마세요.", "en": "Do not wash your face today.", "ja": "本日は洗顔しないでください。", "cn": "今天请不要洗脸。", "tw": "今天請不要洗臉。", "dc": false}, {"ko": "24시간 동안 화장을 피해주세요.", "en": "Avoid makeup for 24 hours.", "ja": "24時間はメイクを避けてください。", "cn": "24小时内请避免化妆。", "tw": "24小時內請避免化妝。", "dc": false}, {"ko": "일주일간 음주와 흡연을 피해주세요.", "en": "Avoid alcohol and smoking for one week.", "ja": "1週間は飲酒と喫煙を避けてください。", "cn": "一周内请避免饮酒和吸烟。", "tw": "一週內請避免飲酒和吸菸。", "dc": false}, {"ko": "강한 운동은 피해주세요.", "en": "Avoid strenuous exercise.", "ja": "激しい運動は避けてください。", "cn": "请避免剧烈运动。", "tw": "請避免劇烈運動。", "dc": false}, {"ko": "붓기와 멍은 자연스러운 증상입니다.", "en": "Swelling and bruising are common symptoms.", "ja": "腫れや内出血は一般的な症状です。", "cn": "肿胀和淤青是常见症状。", "tw": "腫脹和瘀青是常見症狀。", "dc": false}, {"ko": "통증, 열감, 심한 붓기가 있으면 병원에 연락해주세요.", "en": "Contact the clinic if you have pain, heat, or severe swelling.", "ja": "痛み、熱感、強い腫れがある場合はクリニックに連絡してください。", "cn": "如有疼痛、发热感或严重肿胀，请联系医院。", "tw": "如有疼痛、發熱感或嚴重腫脹，請聯絡診所。", "dc": true}, {"ko": "처방받은 약을 정해진 시간에 복용해주세요.", "en": "Take the prescribed medication at the scheduled time.", "ja": "処方された薬を決められた時間に服用してください。", "cn": "请按时服用处方药。", "tw": "請按時服用處方藥。", "dc": false}, {"ko": "예약된 날짜에 내원해주세요.", "en": "Please visit the clinic on your scheduled date.", "ja": "予約日にご来院ください。", "cn": "请在预约日期来院。", "tw": "請在預約日期來院。", "dc": false}, {"ko": "상담비", "en": "Consultation fee", "ja": "相談料", "cn": "咨询费", "tw": "諮詢費", "dc": false}, {"ko": "검사비", "en": "Examination fee", "ja": "検査費", "cn": "检查费", "tw": "檢查費", "dc": false}, {"ko": "마취비", "en": "Anesthesia fee", "ja": "麻酔費", "cn": "麻醉费", "tw": "麻醉費", "dc": false}, {"ko": "약값", "en": "Medication cost", "ja": "薬代", "cn": "药费", "tw": "藥費", "dc": false}, {"ko": "추가 비용", "en": "Additional cost", "ja": "追加費用", "cn": "额外费用", "tw": "額外費用", "dc": false}, {"ko": "예약금", "en": "Deposit", "ja": "予約金", "cn": "预约金", "tw": "預約金", "dc": false}, {"ko": "취소 수수료", "en": "Cancellation fee", "ja": "キャンセル料", "cn": "取消手续费", "tw": "取消手續費", "dc": false}, {"ko": "환불 규정", "en": "Refund policy", "ja": "返金規定", "cn": "退款规定", "tw": "退款規定", "dc": false}, {"ko": "해외카드 결제 가능", "en": "International cards accepted", "ja": "海外カード決済可能", "cn": "可使用海外银行卡付款", "tw": "可使用海外信用卡付款", "dc": false}, {"ko": "영문 영수증", "en": "English receipt", "ja": "英文領収書", "cn": "英文收据", "tw": "英文收據", "dc": false}, {"ko": "진료확인서", "en": "Treatment confirmation certificate", "ja": "診療確認書", "cn": "就诊确认书", "tw": "就診確認書", "dc": false}, {"ko": "어지럽습니다.", "en": "I feel dizzy.", "ja": "めまいがします。", "cn": "我头晕。", "tw": "我頭暈。", "dc": true}, {"ko": "숨쉬기 어렵습니다.", "en": "I have difficulty breathing.", "ja": "息が苦しいです。", "cn": "我呼吸困难。", "tw": "我呼吸困難。", "dc": true}, {"ko": "통증이 심합니다.", "en": "The pain is severe.", "ja": "痛みが強いです。", "cn": "疼痛很严重。", "tw": "疼痛很嚴重。", "dc": true}, {"ko": "피가 납니다.", "en": "I am bleeding.", "ja": "出血しています。", "cn": "我在出血。", "tw": "我在出血。", "dc": true}, {"ko": "속이 메스껍습니다.", "en": "I feel nauseous.", "ja": "吐き気がします。", "cn": "我恶心想吐。", "tw": "我覺得噁心想吐。", "dc": true}, {"ko": "알레르기 반응이 있는 것 같습니다.", "en": "I think I am having an allergic reaction.", "ja": "アレルギー反応が出ているようです。", "cn": "我好像出现了过敏反应。", "tw": "我好像出現了過敏反應。", "dc": true}, {"ko": "보호자에게 연락해주세요.", "en": "Please contact my guardian.", "ja": "保護者に連絡してください。", "cn": "请联系我的监护人。", "tw": "請聯絡我的監護人。", "dc": true}, {"ko": "응급실에 가야 하나요?", "en": "Should I go to the emergency room?", "ja": "救急外来に行く必要がありますか？", "cn": "我需要去急诊室吗？", "tw": "我需要去急診室嗎？", "dc": true}, {"ko": "점 제거", "en": "Mole removal", "ja": "ほくろ除去", "cn": "祛痣", "tw": "除痣", "dc": false}, {"ko": "기미", "en": "Melasma", "ja": "肝斑", "cn": "黄褐斑", "tw": "肝斑", "dc": false}, {"ko": "잡티", "en": "Blemishes", "ja": "シミ・くすみ", "cn": "色斑", "tw": "色斑", "dc": false}, {"ko": "여드름 압출", "en": "Acne extraction", "ja": "ニキビ圧出", "cn": "痘痘清理", "tw": "痘痘清理", "dc": false}, {"ko": "피지", "en": "Sebum", "ja": "皮脂", "cn": "皮脂", "tw": "皮脂", "dc": false}, {"ko": "블랙헤드", "en": "Blackheads", "ja": "黒ずみ", "cn": "黑头", "tw": "黑頭", "dc": false}, {"ko": "모공 레이저", "en": "Pore laser treatment", "ja": "毛穴レーザー", "cn": "毛孔激光", "tw": "毛孔雷射", "dc": false}, {"ko": "리쥬란", "en": "Rejuran", "ja": "リジュラン", "cn": "丽珠兰", "tw": "麗珠蘭", "dc": false}, {"ko": "엑소좀", "en": "Exosome", "ja": "エクソソーム", "cn": "外泌体", "tw": "外泌體", "dc": false}, {"ko": "눈밑지방재배치", "en": "Lower eyelid fat repositioning", "ja": "目の下の脂肪再配置", "cn": "眼下脂肪重置", "tw": "眼下脂肪重置", "dc": true}, {"ko": "트임수술", "en": "Epicanthoplasty / Canthoplasty", "ja": "目頭切開・目尻切開", "cn": "开眼角手术", "tw": "開眼角手術", "dc": true}, {"ko": "눈매교정", "en": "Ptosis correction", "ja": "眼瞼下垂矯正", "cn": "眼肌矫正", "tw": "眼瞼下垂矯正", "dc": true}, {"ko": "매몰법", "en": "Non-incisional double eyelid surgery", "ja": "埋没法", "cn": "埋线双眼皮", "tw": "埋線雙眼皮", "dc": true}, {"ko": "절개법", "en": "Incisional double eyelid surgery", "ja": "切開法", "cn": "切开双眼皮", "tw": "切開雙眼皮", "dc": true}, {"ko": "코끝성형", "en": "Nasal tip surgery", "ja": "鼻尖形成", "cn": "鼻尖整形", "tw": "鼻尖整形", "dc": true}, {"ko": "자가연골", "en": "Autologous cartilage", "ja": "自家軟骨", "cn": "自体软骨", "tw": "自體軟骨", "dc": true}, {"ko": "윤곽 3종", "en": "Three-part facial contouring", "ja": "輪郭3点", "cn": "轮廓三件套", "tw": "輪廓三件套", "dc": true}, {"ko": "스케일링", "en": "Dental scaling", "ja": "スケーリング", "cn": "洗牙", "tw": "洗牙", "dc": false}, {"ko": "충치치료", "en": "Cavity treatment", "ja": "虫歯治療", "cn": "蛀牙治疗", "tw": "蛀牙治療", "dc": false}, {"ko": "신경치료", "en": "Root canal treatment", "ja": "根管治療", "cn": "根管治疗", "tw": "根管治療", "dc": true}, {"ko": "크라운", "en": "Dental crown", "ja": "クラウン", "cn": "牙冠", "tw": "牙冠", "dc": false}, {"ko": "임시치아", "en": "Temporary tooth", "ja": "仮歯", "cn": "临时牙", "tw": "臨時牙", "dc": false}, {"ko": "사랑니", "en": "Wisdom tooth", "ja": "親知らず", "cn": "智齿", "tw": "智齒", "dc": false}, {"ko": "교합", "en": "Bite / Occlusion", "ja": "噛み合わせ", "cn": "咬合", "tw": "咬合", "dc": true}, {"ko": "공복", "en": "Fasting", "ja": "空腹", "cn": "空腹", "tw": "空腹", "dc": false}, {"ko": "위내시경", "en": "Gastroscopy", "ja": "胃内視鏡", "cn": "胃镜", "tw": "胃鏡", "dc": true}, {"ko": "대장내시경", "en": "Colonoscopy", "ja": "大腸内視鏡", "cn": "肠镜", "tw": "腸鏡", "dc": true}, {"ko": "수면내시경", "en": "Sedated endoscopy", "ja": "鎮静内視鏡", "cn": "无痛内镜", "tw": "無痛內視鏡", "dc": true}, {"ko": "조직검사", "en": "Biopsy", "ja": "組織検査", "cn": "活检", "tw": "切片檢查", "dc": true}, {"ko": "이상소견", "en": "Abnormal finding", "ja": "異常所見", "cn": "异常结果", "tw": "異常結果", "dc": true}, {"ko": "영문 결과지", "en": "English medical report", "ja": "英文結果表", "cn": "英文报告", "tw": "英文報告", "dc": false}, {"ko": "절개식 모발이식", "en": "FUT hair transplant", "ja": "FUT植毛", "cn": "切取式植发", "tw": "切取式植髮", "dc": true}, {"ko": "비절개식 모발이식", "en": "FUE hair transplant", "ja": "FUE植毛", "cn": "无痕植发", "tw": "無痕植髮", "dc": true}, {"ko": "모낭", "en": "Hair follicle", "ja": "毛包", "cn": "毛囊", "tw": "毛囊", "dc": false}, {"ko": "생착률", "en": "Graft survival rate", "ja": "生着率", "cn": "成活率", "tw": "存活率", "dc": true}, {"ko": "암흑기", "en": "Shedding phase", "ja": "脱落期", "cn": "脱落期", "tw": "脫落期", "dc": false}, {"ko": "M자 탈모", "en": "M-shaped hair loss", "ja": "M字型脱毛", "cn": "M型脱发", "tw": "M型掉髮", "dc": false}];
+
+function matchTerms(text, srcLang) {
+  var key = {ko:'ko',en:'en',ja:'ja','zh-CN':'cn','zh-TW':'tw'}[srcLang] || 'ko';
+  var lower = text.toLowerCase();
+  var matched = [];
+  for (var i = 0; i < DICT.length && matched.length < 8; i++) {
+    var term = DICT[i][key];
+    if (!term) continue;
+    if (lower.indexOf(term.toLowerCase()) !== -1) matched.push(DICT[i]);
+  }
+  return matched;
+}
+
+// ===== STATE =====
+var L={code:'',stt:'',label:'',flag:'',name:''};
+var vgDoc='f',vgPat='f',fs='m',mode='v',msgs=[],log=[],rec=null,busy=false,speaking=false,qpOn=false,qpCat='접수';
+
+// ===== SCREENS =====
+function sw(id){document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('on')});document.getElementById(id).classList.add('on');if(id==='S2')document.getElementById('SL').textContent=L.flag+' '+L.name}
+function go(c,s,l,f,n){L={code:c,stt:s,label:l,flag:f,name:n};msgs=[];log=[];document.getElementById('hf').textContent=f;document.getElementById('PL').textContent=l;document.getElementById('TB').textContent='👤 '+l;render();sw('S1');reqMic()}
+
+// ===== MIC PERMISSION =====
+async function reqMic(){try{var s=await navigator.mediaDevices.getUserMedia({audio:true});s.getTracks().forEach(function(t){t.stop()})}catch(e){}}
+
+// ===== TTS INIT =====
+// Google Cloud TTS - no browser initialization needed
+
+// ===== TTS (Google Cloud) =====
+var audioEl = new Audio();
+
+function speak(text, lc, speakerRole) {
+  if (!text) return;
+  if (rec) { stopRec() }
+  audioEl.pause();
+  speaking = true; updMic();
+
+  // Determine gender based on who needs to HEAR (target = opposite speaker)
+  var gender = speakerRole === 'doctor' ? vgPat : vgDoc;
+
+  fetch('/api/tts', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text: text, lang: lc, gender: gender })
+  })
+  .then(function(r) { return r.json() })
+  .then(function(data) {
+    if (data.audio) {
+      audioEl.src = 'data:audio/mp3;base64,' + data.audio;
+      audioEl.onended = function() { speaking = false; updMic() };
+      audioEl.onerror = function() { speaking = false; updMic() };
+      audioEl.play().catch(function() { speaking = false; updMic() });
+    } else {
+      speaking = false; updMic();
+    }
+  })
+  .catch(function() { speaking = false; updMic() });
+
+  // Fallback reset
+  setTimeout(function() { if (speaking) { speaking = false; updMic() } }, 12000);
+}
+
+// ===== RENDER =====
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function esc4(s){return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,' ')}
+function render(){
+  var a=document.getElementById('CA'),e=document.getElementById('EM');
+  Array.from(a.children).forEach(function(c){if(c!==e)a.removeChild(c)});
+  if(!msgs.length){e.style.display='flex';return}e.style.display='none';
+  var sc=fs==='s'?.85:fs==='l'?1.2:1;
+  msgs.forEach(function(m){
+    var d=m.speaker==='doctor',div=document.createElement('div');
+    div.className='m '+(d?'d':'p');
+    var warn=m.warn?'<div class="dw">⚠️ 의료진 확인이 필요한 내용입니다. 최종 판단은 담당 의료진에게 확인해 주세요.</div>':'';
+    div.innerHTML='<div class="mw">'+(d?'🩺 Doctor':'👤 '+L.label)+'</div><div class="mb"><div class="mo" style="font-size:'+(14*sc)+'px">'+esc(m.original)+'</div><div class="ml"></div><div class="mt" style="font-size:'+(15*sc)+'px">'+esc(m.translated)+'</div>'+warn+'<div class="mf"><span class="ti">'+m.time+'</span><button class="sp" onclick="speak(\''+esc4(m.translated)+'\',\''+m.tgt+'\',\''+m.speaker+'\')">🔊</button></div></div>';
+    a.appendChild(div);
+  });
+  a.scrollTop=a.scrollHeight;
+}
+
+function addSt(h){rmSt();var a=document.getElementById('CA'),d=document.createElement('div');d.className='sb';d.id='ST';d.innerHTML=h;a.appendChild(d);a.scrollTop=a.scrollHeight}
+function rmSt(){var e=document.getElementById('ST');if(e)e.remove()}
+
+// ===== QUICK PHRASES =====
+function toggleQP(){
+  qpOn=!qpOn;
+  document.getElementById('QP').classList.toggle('on',qpOn);
+  document.getElementById('QB').classList.toggle('on',qpOn);
+  if(qpOn)renderQP();
+}
+function switchCat(c){
+  qpCat=c;
+  document.querySelectorAll('.qc').forEach(function(b){b.classList.toggle('on',b.dataset.c===c)});
+  renderQP();
+}
+function renderQP(){
+  // Tabs
+  var qt=document.getElementById('QT');
+  if(!qt.children.length){
+    var cats=['접수','상담','진료','결제','주의사항','응급'];
+    var labels=['접수','상담','진료','결제','주의','🚨응급'];
+    cats.forEach(function(c,i){
+      var b=document.createElement('button');b.className='qc'+(c===qpCat?' on':'');b.dataset.c=c;b.textContent=labels[i];b.onclick=function(){switchCat(c)};qt.appendChild(b);
+    });
+  }
+  // List
+  var ql=document.getElementById('QL');ql.innerHTML='';
+  var lk={en:'en',ja:'ja','zh-CN':'zhCN','zh-TW':'zhTW'}[L.code]||'en';
+  var cat=QP.find(function(c){return c.category===qpCat});
+  if(!cat)return;
+  cat.phrases.forEach(function(p){
+    var b=document.createElement('button');b.className='qi';
+    b.innerHTML='<div class="qk">'+esc(p.ko)+'</div><div class="qv">'+esc(p[lk]||p.en)+'</div>';
+    b.onclick=function(){useQP(p,lk)};ql.appendChild(b);
+  });
+}
+function useQP(p,lk){
+  var tr=p[lk]||p.en;
+  var now=new Date().toLocaleTimeString('ko',{hour:'2-digit',minute:'2-digit',hour12:false});
+  var msg={speaker:'doctor',original:p.ko,translated:tr,time:now,src:'ko',tgt:L.code,warn:p.doctorCheckRequired};
+  msgs.push(msg);log.push(msg);render();
+  speak(tr,L.code,'doctor');
+  toggleQP();
+}
+
+// ===== STT =====
+var recognition=null;
+function toggleRec(who){if(busy||speaking)return;if(rec===who){stopRec();return}if(rec)return;startRec(who)}
+function startRec(who){
+  // Stop TTS first
+  if(window.speechSynthesis){speechSynthesis.cancel();speaking=false}
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){addSt('<div class="si">⚠️ 음성 미지원</div>');return}
+  var r=new SR();r.lang=who==='doctor'?'ko-KR':L.stt;r.interimResults=true;r.continuous=false;
+  var ft='',st=null;
+  r.onstart=function(){rec=who;updMic();document.getElementById('RB').style.display='flex';document.getElementById('RL').textContent=who==='doctor'?'듣고 있습니다... 탭하여 중지':'Listening... Tap to stop';document.getElementById('EM').style.display='none'};
+  r.onresult=function(e){var im='';ft='';for(var i=e.resultIndex;i<e.results.length;i++){if(e.results[i].isFinal)ft+=e.results[i][0].transcript;else im+=e.results[i][0].transcript}addSt('<div class="si" style="font-style:italic;color:var(--g7)">'+esc(im||ft)+'</div>');if(st)clearTimeout(st);if(!ft)st=setTimeout(function(){r.stop()},2500)};
+  r.onerror=function(e){rec=null;updMic();document.getElementById('RB').style.display='none';rmSt();if(e.error==='not-allowed')addSt('<div class="si">⚠️ 마이크 권한을 허용해주세요</div>')};
+  r.onend=function(){rec=null;updMic();document.getElementById('RB').style.display='none';if(st)clearTimeout(st);rmSt();if(ft.trim())translate(ft.trim(),who)};
+  recognition=r;try{r.start()}catch(e){}
+}
+function stopRec(){if(recognition)try{recognition.stop()}catch(e){}}
+function updMic(){
+  var d=document.getElementById('MD'),p=document.getElementById('MP'),qb=document.getElementById('QB');
+  d.className='mc dc';p.className='mc pc';d.querySelector('.mi').textContent='🎤';p.querySelector('.mi').textContent='🎤';d.querySelector('.ms').textContent='Doctor';p.querySelector('.ms').textContent='Patient';
+  // Quick phrases: 의사 전용
+  qb.disabled=false;qb.style.opacity='1';
+  if(rec==='doctor'){d.className='mc dc ra';p.className='mc pc off';d.querySelector('.mi').textContent='⏹️';d.querySelector('.ms').textContent='탭하여 중지'}
+  else if(rec==='patient'){
+    p.className='mc pc ra';d.className='mc dc off';p.querySelector('.mi').textContent='⏹️';p.querySelector('.ms').textContent='Tap to stop';
+    // 환자 녹음 중 → 자주 쓰는 문장 비활성화+닫기
+    qb.disabled=true;qb.style.opacity='0.3';
+    if(qpOn)toggleQP();
+  }
+  if(busy||speaking){d.className='mc dc off';p.className='mc pc off';qb.disabled=true;qb.style.opacity='0.3'}
+}
+
+// ===== TRANSLATE =====
+async function translate(text,who){
+  busy=true;updMic();addSt('<div class="si">⏳ 번역 중...</div>');
+  var src=who==='doctor'?'ko':L.code,tgt=who==='doctor'?L.code:'ko';
+  var ctx=log.slice(-4).map(function(m){return (m.speaker==='doctor'?'Doctor(KO)':'Patient('+L.label+')')+': '+m.original+' → '+m.translated}).join('\n');
+  var srcLang=who==='doctor'?'ko':L.code;
+  var matched=matchTerms(text,srcLang);
+  try{
+    var res=await fetch('/api/translate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text:text,speaker:who,langCode:L.code,context:ctx||undefined,terms:matched.length?matched:undefined})});
+    var data=await res.json();if(data.error)throw new Error(data.error);
+    var warn=data.warn||data.translated.startsWith('⚠️');
+    var now=new Date().toLocaleTimeString('ko',{hour:'2-digit',minute:'2-digit',hour12:false});
+    var msg={speaker:who,original:text,translated:data.translated,time:now,src:src,tgt:tgt,warn:warn};
+    msgs.push(msg);log.push(msg);rmSt();render();speak(data.translated,tgt,who);
+  }catch(e){
+    var now2=new Date().toLocaleTimeString('ko',{hour:'2-digit',minute:'2-digit',hour12:false});
+    msgs.push({speaker:who,original:text,translated:'⚠️ 번역 실패',time:now2,src:src,tgt:tgt});rmSt();render();
+  }
+  busy=false;updMic();
+}
+
+// ===== TEXT =====
+function toggleMode(){mode=mode==='v'?'t':'v';document.getElementById('VU').style.display=mode==='v'?'flex':'none';document.getElementById('TU').style.display=mode==='t'?'flex':'none';document.getElementById('MB').textContent=mode==='v'?'⌨️ 텍스트':'🎤 음성'}
+function sendText(who){var i=document.getElementById('TI'),t=i.value.trim();if(!t||busy)return;i.value='';translate(t,who)}
+
+// ===== SETTINGS =====
+function setV(who,g){
+  if(who==='doc'){vgDoc=g;document.getElementById('DF').className='ob'+(g==='f'?' s':'');document.getElementById('DM').className='ob'+(g==='m'?' s':'')}
+  else{vgPat=g;document.getElementById('PF').className='ob'+(g==='f'?' s':'');document.getElementById('PM').className='ob'+(g==='m'?' s':'')}
+}
+function setF(s){fs=s;document.getElementById('FS').className='ob'+(s==='s'?' s':'');document.getElementById('FM').className='ob'+(s==='m'?' s':'');document.getElementById('FL').className='ob'+(s==='l'?' s':'');render()}
+function copyAll(){var t=msgs.map(function(m){return (m.speaker==='doctor'?'🩺':'👤')+' ['+m.time+']\n'+m.original+'\n→ '+m.translated}).join('\n\n');navigator.clipboard&&navigator.clipboard.writeText(t).then(function(){var b=document.getElementById('CP');b.textContent='✅ 복사 완료!';setTimeout(function(){b.textContent='📋 대화 내역 복사 / Copy conversation'},2000)})}
+</script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+[
+  {
+    "category": "접수",
+    "phrases": [
+      {
+        "id": "qp_001",
+        "ko": "예약하셨나요?",
+        "en": "Do you have an appointment?",
+        "ja": "ご予約はありますか？",
+        "zhCN": "您有预约吗？",
+        "zhTW": "您有預約嗎？",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_002",
+        "ko": "성함과 생년월일을 알려주세요.",
+        "en": "Please tell me your name and date of birth.",
+        "ja": "お名前と生年月日を教えてください。",
+        "zhCN": "请告诉我您的姓名和出生日期。",
+        "zhTW": "請告訴我您的姓名和出生日期。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_003",
+        "ko": "여권 또는 외국인등록증이 필요합니다.",
+        "en": "We need your passport or alien registration card.",
+        "ja": "パスポートまたは外国人登録証が必要です。",
+        "zhCN": "需要您的护照或外国人登记证。",
+        "zhTW": "需要您的護照或外國人登錄證。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_004",
+        "ko": "잠시만 기다려 주세요.",
+        "en": "Please wait a moment.",
+        "ja": "少々お待ちください。",
+        "zhCN": "请稍等。",
+        "zhTW": "請稍等。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_007",
+        "ko": "대기 시간이 발생할 수 있습니다.",
+        "en": "There may be a waiting time.",
+        "ja": "待ち時間が発生する場合があります。",
+        "zhCN": "可能需要等待。",
+        "zhTW": "可能需要等待。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_008",
+        "ko": "통역이 필요한 언어를 선택해주세요.",
+        "en": "Please select the language you need for interpretation.",
+        "ja": "通訳が必要な言語を選択してください。",
+        "zhCN": "请选择您需要的翻译语言。",
+        "zhTW": "請選擇您需要的翻譯語言。",
+        "doctorCheckRequired": false
+      }
+    ]
+  },
+  {
+    "category": "상담",
+    "phrases": [
+      {
+        "id": "qp_005",
+        "ko": "오늘 상담만 진행하시나요?",
+        "en": "Are you here for consultation only today?",
+        "ja": "本日は相談のみですか？",
+        "zhCN": "今天只是咨询吗？",
+        "zhTW": "今天只是諮詢嗎？",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_006",
+        "ko": "오늘 바로 시술을 원하시나요?",
+        "en": "Would you like to have the procedure today?",
+        "ja": "本日すぐに施術をご希望ですか？",
+        "zhCN": "您今天想直接做项目吗？",
+        "zhTW": "您今天想直接做療程嗎？",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_009",
+        "ko": "재시술 가능성",
+        "en": "Possibility of additional treatment",
+        "ja": "再施術の可能性",
+        "zhCN": "可能需要再次治疗",
+        "zhTW": "可能需要再次療程",
+        "doctorCheckRequired": true
+      },
+      {
+        "id": "qp_033",
+        "ko": "절개식 모발이식",
+        "en": "FUT hair transplant",
+        "ja": "FUT植毛",
+        "zhCN": "切取式植发",
+        "zhTW": "切取式植髮",
+        "doctorCheckRequired": true
+      },
+      {
+        "id": "qp_034",
+        "ko": "비절개식 모발이식",
+        "en": "FUE hair transplant",
+        "ja": "FUE植毛",
+        "zhCN": "无痕植发",
+        "zhTW": "無痕植髮",
+        "doctorCheckRequired": true
+      },
+      {
+        "id": "qp_035",
+        "ko": "모낭",
+        "en": "Hair follicle",
+        "ja": "毛包",
+        "zhCN": "毛囊",
+        "zhTW": "毛囊",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_036",
+        "ko": "생착률",
+        "en": "Graft survival rate",
+        "ja": "生着率",
+        "zhCN": "成活率",
+        "zhTW": "存活率",
+        "doctorCheckRequired": true
+      },
+      {
+        "id": "qp_037",
+        "ko": "암흑기",
+        "en": "Shedding phase",
+        "ja": "脱落期",
+        "zhCN": "脱落期",
+        "zhTW": "脫落期",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_038",
+        "ko": "M자 탈모",
+        "en": "M-shaped hair loss",
+        "ja": "M字型脱毛",
+        "zhCN": "M型脱发",
+        "zhTW": "M型掉髮",
+        "doctorCheckRequired": false
+      }
+    ]
+  },
+  {
+    "category": "진료",
+    "phrases": [
+      {
+        "id": "qp_100",
+        "ko": "어디가 불편하세요?",
+        "en": "Where does it hurt?",
+        "ja": "どこが痛いですか？",
+        "zhCN": "哪里不舒服？",
+        "zhTW": "哪裡不舒服？",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_101",
+        "ko": "언제부터 증상이 있었나요?",
+        "en": "When did the symptoms start?",
+        "ja": "いつから症状がありますか？",
+        "zhCN": "症状从什么时候开始的？",
+        "zhTW": "症狀從什麼時候開始的？",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_102",
+        "ko": "복용 중인 약이 있나요?",
+        "en": "Are you taking any medication?",
+        "ja": "服用中の薬はありますか？",
+        "zhCN": "目前有在吃什么药吗？",
+        "zhTW": "目前有在吃什麼藥嗎？",
+        "doctorCheckRequired": true
+      },
+      {
+        "id": "qp_103",
+        "ko": "알레르기가 있나요?",
+        "en": "Do you have any allergies?",
+        "ja": "アレルギーはありますか？",
+        "zhCN": "有过敏吗？",
+        "zhTW": "有過敏嗎？",
+        "doctorCheckRequired": true
+      },
+      {
+        "id": "qp_104",
+        "ko": "시술 전 동의서 작성이 필요합니다.",
+        "en": "You need to sign a consent form before the procedure.",
+        "ja": "施術前に同意書の記入が必要です。",
+        "zhCN": "术前需要签署同意书。",
+        "zhTW": "術前需要簽署同意書。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_105",
+        "ko": "통증이 있으면 말씀해 주세요.",
+        "en": "Please let me know if you feel pain.",
+        "ja": "痛みがあれば教えてください。",
+        "zhCN": "如果疼请告诉我。",
+        "zhTW": "如果痛請告訴我。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_106",
+        "ko": "마취가 필요합니다.",
+        "en": "Anesthesia is needed.",
+        "ja": "麻酔が必要です。",
+        "zhCN": "需要麻醉。",
+        "zhTW": "需要麻醉。",
+        "doctorCheckRequired": true
+      },
+      {
+        "id": "qp_107",
+        "ko": "금식이 필요합니다.",
+        "en": "You need to fast.",
+        "ja": "絶食が必要です。",
+        "zhCN": "需要空腹。",
+        "zhTW": "需要空腹。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_108",
+        "ko": "숨을 크게 쉬세요.",
+        "en": "Take a deep breath.",
+        "ja": "大きく息を吸ってください。",
+        "zhCN": "请深呼吸。",
+        "zhTW": "請深呼吸。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_109",
+        "ko": "움직이지 마세요.",
+        "en": "Please don't move.",
+        "ja": "動かないでください。",
+        "zhCN": "请不要动。",
+        "zhTW": "請不要動。",
+        "doctorCheckRequired": false
+      }
+    ]
+  },
+  {
+    "category": "결제",
+    "phrases": [
+      {
+        "id": "qp_019",
+        "ko": "상담비",
+        "en": "Consultation fee",
+        "ja": "相談料",
+        "zhCN": "咨询费",
+        "zhTW": "諮詢費",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_020",
+        "ko": "검사비",
+        "en": "Examination fee",
+        "ja": "検査費",
+        "zhCN": "检查费",
+        "zhTW": "檢查費",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_021",
+        "ko": "마취비",
+        "en": "Anesthesia fee",
+        "ja": "麻酔費",
+        "zhCN": "麻醉费",
+        "zhTW": "麻醉費",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_022",
+        "ko": "약값",
+        "en": "Medication cost",
+        "ja": "薬代",
+        "zhCN": "药费",
+        "zhTW": "藥費",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_023",
+        "ko": "추가 비용",
+        "en": "Additional cost",
+        "ja": "追加費用",
+        "zhCN": "额外费用",
+        "zhTW": "額外費用",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_024",
+        "ko": "예약금",
+        "en": "Deposit",
+        "ja": "予約金",
+        "zhCN": "预约金",
+        "zhTW": "預約金",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_025",
+        "ko": "취소 수수료",
+        "en": "Cancellation fee",
+        "ja": "キャンセル料",
+        "zhCN": "取消手续费",
+        "zhTW": "取消手續費",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_026",
+        "ko": "환불 규정",
+        "en": "Refund policy",
+        "ja": "返金規定",
+        "zhCN": "退款规定",
+        "zhTW": "退款規定",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_027",
+        "ko": "해외카드 결제 가능",
+        "en": "International cards accepted",
+        "ja": "海外カード決済可能",
+        "zhCN": "可使用海外银行卡付款",
+        "zhTW": "可使用海外信用卡付款",
+        "doctorCheckRequired": false
+      }
+    ]
+  },
+  {
+    "category": "주의사항",
+    "phrases": [
+      {
+        "id": "qp_010",
+        "ko": "시술 후 주의사항을 반드시 지켜주세요.",
+        "en": "Please follow the post-treatment precautions carefully.",
+        "ja": "施術後の注意事項を必ず守ってください。",
+        "zhCN": "请务必遵守治疗后的注意事项。",
+        "zhTW": "請務必遵守療程後的注意事項。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_011",
+        "ko": "오늘은 세안하지 마세요.",
+        "en": "Do not wash your face today.",
+        "ja": "本日は洗顔しないでください。",
+        "zhCN": "今天请不要洗脸。",
+        "zhTW": "今天請不要洗臉。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_012",
+        "ko": "24시간 동안 화장을 피해주세요.",
+        "en": "Avoid makeup for 24 hours.",
+        "ja": "24時間はメイクを避けてください。",
+        "zhCN": "24小时内请避免化妆。",
+        "zhTW": "24小時內請避免化妝。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_013",
+        "ko": "일주일간 음주와 흡연을 피해주세요.",
+        "en": "Avoid alcohol and smoking for one week.",
+        "ja": "1週間は飲酒と喫煙を避けてください。",
+        "zhCN": "一周内请避免饮酒和吸烟。",
+        "zhTW": "一週內請避免飲酒和吸菸。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_014",
+        "ko": "강한 운동은 피해주세요.",
+        "en": "Avoid strenuous exercise.",
+        "ja": "激しい運動は避けてください。",
+        "zhCN": "请避免剧烈运动。",
+        "zhTW": "請避免劇烈運動。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_015",
+        "ko": "붓기와 멍은 자연스러운 증상입니다.",
+        "en": "Swelling and bruising are common symptoms.",
+        "ja": "腫れや内出血は一般的な症状です。",
+        "zhCN": "肿胀和淤青是常见症状。",
+        "zhTW": "腫脹和瘀青是常見症狀。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_016",
+        "ko": "통증, 열감, 심한 붓기가 있으면 병원에 연락해주세요.",
+        "en": "Contact the clinic if you have pain, heat, or severe swelling.",
+        "ja": "痛み、熱感、強い腫れがある場合はクリニックに連絡してください。",
+        "zhCN": "如有疼痛、发热感或严重肿胀，请联系医院。",
+        "zhTW": "如有疼痛、發熱感或嚴重腫脹，請聯絡診所。",
+        "doctorCheckRequired": true
+      },
+      {
+        "id": "qp_017",
+        "ko": "처방받은 약을 정해진 시간에 복용해주세요.",
+        "en": "Take the prescribed medication at the scheduled time.",
+        "ja": "処方された薬を決められた時間に服用してください。",
+        "zhCN": "请按时服用处方药。",
+        "zhTW": "請按時服用處方藥。",
+        "doctorCheckRequired": false
+      },
+      {
+        "id": "qp_018",
+        "ko": "예약된 날짜에 내원해주세요.",
+        "en": "Please visit the clinic on your scheduled date.",
+        "ja": "予約日にご来院ください。",
+        "zhCN": "请在预约日期来院。",
+        "zhTW": "請在預約日期來院。",
+        "doctorCheckRequired": false
+      }
+    ]
+  },
+  {
+    "category": "응급",
+    "phrases": [
+      {
+        "id": "qp_028",
+        "ko": "숨쉬기 어렵습니다.",
+        "en": "I have difficulty breathing.",
+        "ja": "息が苦しいです。",
+        "zhCN": "我呼吸困难。",
+        "zhTW": "我呼吸困難。",
+        "doctorCheckRequired": true
+      },
+      {
+        "id": "qp_029",
+        "ko": "피가 납니다.",
+        "en": "I am bleeding.",
+        "ja": "出血しています。",
+        "zhCN": "我在出血。",
+        "zhTW": "我在出血。",
+        "doctorCheckRequired": true
+      },
+      {
+        "id": "qp_030",
+        "ko": "알레르기 반응이 있는 것 같습니다.",
+        "en": "I think I am having an allergic reaction.",
+        "ja": "アレルギー反応が出ているようです。",
+        "zhCN": "我好像出现了过敏反应。",
+        "zhTW": "我好像出現了過敏反應。",
+        "doctorCheckRequired": true
+      },
+      {
+        "id": "qp_031",
+        "ko": "보호자에게 연락해주세요.",
+        "en": "Please contact my guardian.",
+        "ja": "保護者に連絡してください。",
+        "zhCN": "请联系我的监护人。",
+        "zhTW": "請聯絡我的監護人。",
+        "doctorCheckRequired": true
+      },
+      {
+        "id": "qp_032",
+        "ko": "응급실에 가야 하나요?",
+        "en": "Should I go to the emergency room?",
+        "ja": "救急外来に行く必要がありますか？",
+        "zhCN": "我需要去急诊室吗？",
+        "zhTW": "我需要去急診室嗎？",
+        "doctorCheckRequired": true
+      }
+    ]
+  }
+]
